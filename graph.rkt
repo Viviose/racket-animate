@@ -4,7 +4,7 @@
 (require test-engine/racket-tests)
 
 ;Provides access to all specified functions and variables in this file to other files.
-(provide (all-defined-out))
+(provide (except-out (all-defined-out) h k))
 
 ;between?: number(query) number(min) number(max) -> boolean
 ;Checks to see if a number is within a specified bound.
@@ -24,7 +24,6 @@
         )
   )
 
-
 ;degrees-asin: number(ratio) -> number(angle in degrees)
 ;Converts a result of asin into degrees.
 (define (degrees-atan ratio)
@@ -34,12 +33,10 @@
 ;slope: Number(x1) Number(y1) Number(x2) Number(y2) -> Number (slope)
 ;Determines the slope between two points.
 (define (slope x1 y1 x2 y2)
-  (/
-   (- y2 y1)
-   (- x2 x1)
-   )
+  (/ (- y2 y1)
+     (- x2 x1)
+     )
   )
-
 
 ;calc-angle: number(x1) number(y1) number(x2) number(y2) -> number(angle in degrees)
 ;Determines the angle of the given line to the horizontal.
@@ -49,15 +46,18 @@
              )
   )
 
+;Private Helper Functions
+;************************
 (define (h x1 x2)
-  (/
-   (+ x1 x2)
-   2))
+  (/ (+ x1 x2)
+     2)
+  )
 
 (define (k y1 y2)
-  (/
-   (+ y1 y2)
-   2))
+  (/ (+ y1 y2)
+     2)
+  )
+;************************
 
 ;in-ellipse?: number(x1) number(y1) number(x2) number(y2) number(x3) number(y3) number(mouse-x) number(mouse-y) -> boolean
 ;Determines whether a given point is inside of a defined ellipse.
@@ -124,7 +124,6 @@
       )
   )
 
-
 ;find-sup-inf: function(comparison operator) number(comparison value) [Listof Numbers] -> Number
 ;Returns the greatest/least value in a given list of numbers or the given value, whichever is greater/lesser.
 (define (find-sup-inf operator value lon)
@@ -133,9 +132,6 @@
         [else (find-sup-inf operator value (rest lon))]
         )
   )
-
-
-
 
 ;remove-max-or-min: function(comparison operator) [Listof Numbers] -> [Listof Numbers]
 ;Returns the given list without the first instance of its greatest or least character included.
@@ -150,18 +146,3 @@
                     )]
         )
   )
-
-;Testing Suite for remove-max-or-min
-(check-expect (remove-max-or-min > (list 2 3 4))
-              (list 2 3)
-              )
-(check-expect (remove-max-or-min > (list 6 2 1))
-              (list 2 1)
-              )
-(check-expect (remove-max-or-min > (list 2 3 5 5))
-              (list 2 3 5)
-              )
-;End Testing Suite
-
-
-(test)
