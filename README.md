@@ -1,10 +1,17 @@
 # racket-animate #
 Contains files containing helpful functions for use in animations in Racket.
 
-## Importing Library ##
-To require this library in your Racket project, use:
+## Installing Package##
+To install this package, open the package manager and search for racket-animate.
+Alternatively, run:
+```
+raco install package racket-animate
+```
+
+## Importing Package ##
+To require this package in your Racket project, use:
 ```racket
-(require [yourpath]/racket-animate)
+(require racket-animate)
 ```
 
 ### Research ###
