@@ -7,7 +7,7 @@ Alternatively, run:
 ```
 raco install package racket-animate
 ```
-
+in the terminal (Unix or Windows)
 ## Importing Package ##
 To require this package in your Racket project, use:
 ```racket
