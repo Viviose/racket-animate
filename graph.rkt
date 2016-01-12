@@ -62,67 +62,34 @@
 ;in-ellipse?: number(x1) number(y1) number(x2) number(y2) number(x3) number(y3) number(mouse-x) number(mouse-y) -> boolean
 ;Determines whether a given point is inside of a defined ellipse.
 (define (in-ellipse?
-         ;rightmost coord pair
-         x1
-         y1
-         ;leftmost coord pair
-         x2
-         y2
-         ;center top coord pair
-         x3
-         y3
-         ;mouse posn
-         x
-         y)
-  (<= (+ ;The first piece for X
-         (/ (sqr (+
-                  (* (- x (h x1 x2))
-                     (cos
-                      (calc-angle x1 y1 x2 y2)
-                      )
-                     )
-                  (* (- y (k y1 y2))
-                     (sin
-                      (calc-angle x1 y1 x2 y2)
-                      )
-                     )
-                  )
-                 )
-            ;a
-            (sqr
-             (/
-              (distance x1 y1 x2 y2)
-              2
-              ))
-            )
-       ;The second piece for y
-         (/ (sqr (-
-                  (* (- y (k y1 y2))
-                     (cos (calc-angle x1 y1 x2 y2)
-                          )
-                     )
-                  (* (- x (h x1 x2))
-                     (sin (calc-angle x1 y1 x2 y2)
-                          )
-                     )
-                  )
-                 )
-        ;b
-            (sqr
-             (distance
-              (h x1 x2)
-              (k y1 y2)
-              x3
-              y3
-              )
-             )
-            )
-         )
-      ;1 is value of comparison of the point compared to the ellipse.
-      ;If the point is not within a distance less than or equal to 1 of the ellipse, the function will return false.
-      1
-      )
-  )
+          ;rightmost coord pair
+          x1 y1 
+          ;leftmost coord pair
+          x2 y2 
+          ;center top coord pair
+          x3 y3 
+          ;point to check
+          x y) 
+  (local [(define hvar (h x1 x2))
+          (define kvar (k y1 y2))
+          (define xmh (- x hvar))
+          (define ymk (- y kvar))
+          (define mainangle (calc-angle x1 y1 x2 y2))
+          (define cosangle (cos mainangle))
+          (define sinangle (sin mainangle))]
+    (<= (+ ;First piece for x
+          (/ (sqr (+ (* xmh cosangle)
+                     (* ymk sinangle)))
+             ;a
+             (sqr (/ (distance x1 y1 x2 y2) 2)))
+          ;Second piece for y
+          (/ (sqr (- (* ymk cosangle)
+                     (* xmh sinangle)))
+             ;b
+             (sqr (distance hvar kvar x3 y3)))) 
+        ;1 is value of comparison of the point compared to the ellipse.
+        ;;If the point is not within a distance less than or equal to 1 of the ellipse, the function will return false.
+        1)))
 
 ;find-sup-inf: function(comparison operator) number(comparison value) [Listof Numbers] -> Number
 ;Returns the greatest/least value in a given list of numbers or the given value, whichever is greater/lesser.
