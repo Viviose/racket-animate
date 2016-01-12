@@ -1,8 +1,7 @@
 #lang racket
 (require picturing-programs)
-
+(require test-engine/racket-tests)
 (require "../graph.rkt")
-(require "../ellipse.rkt")
 
 ;Testing Suite for calc-angle
 (check-expect (calc-angle 0 0 -7 0)
